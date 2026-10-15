@@ -166,6 +166,11 @@ body.wide .wrap{max-width:1080px}
 @media (min-width:900px){ .kgrid{grid-template-columns:1fr 1fr} .kgrid .span2{grid-column:1 / -1} }
 .quiz{max-width:560px;width:100%;margin-inline:auto}
 @media (max-width:480px){ .card{padding:18px;border-radius:20px} .whoBtn b{font-size:1.3rem} }
+.topActions{display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.link.out{color:var(--coral-ink)}
+.btn.big{font-size:1.5rem;padding:18px 40px;border-radius:20px}
+.note{font-size:.9rem;color:var(--muted);text-align:center;background:var(--soft);border-radius:14px;padding:12px 16px;max-width:520px}
+.link.inl{display:inline;padding:0;color:var(--coral-ink);text-decoration:underline;font-size:inherit}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
 .pop{animation:pop .3s ease}
@@ -178,11 +183,14 @@ body.wide .wrap{max-width:1080px}
       <svg class="crown" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 30 L4 12 L13 20 L20 8 L27 20 L36 12 L34 30 Z" fill="var(--sun)" stroke="var(--coral-ink)" stroke-width="2" stroke-linejoin="round"/><circle cx="20" cy="8" r="2.5" fill="var(--coral)"/><circle cx="4" cy="12" r="2.2" fill="var(--mint)"/><circle cx="36" cy="12" r="2.2" fill="var(--mint)"/><rect x="6" y="30" width="28" height="4" rx="2" fill="var(--coral)"/></svg>
       <span id="brandName">Tablas del 1 al 9</span>
     </div>
-    <button class="link" id="navBtn" type="button" hidden>Inicio</button>
+    <div class="topActions">
+      <button class="link" id="navBtn" type="button" hidden>Inicio</button>
+      <button class="link out" id="outBtn" type="button" hidden>Cerrar sesión</button>
+    </div>
   </header>
   <main id="app"></main>
   <p class="sync" id="sync"></p>
-  <p class="sync" style="text-align:center;opacity:.6">Versión 3</p>
+  <p class="sync" style="text-align:center;opacity:.6">Versión 4</p>
 </div>
 <script>
 /* ====== CONFIGURACIÓN DE SUPABASE ====== */
@@ -195,6 +203,8 @@ const TABLES = [1,2,3,4,5,6,7,8,9];
 const LS_PENDING = "tablasXimena.pending";
 const LS_CACHE = "tablas.cache";
 const LS_FAM = "tablas.familia";
+const LS_GUEST = "tablas.invitado";          // {on:true}
+const LS_GUEST_T = "tablas.invitado.pruebas"; // pruebas sin cuenta (solo en este aparato)
 const GRADOS = ["Preescolar","1° de primaria","2° de primaria","3° de primaria","4° de primaria","5° de primaria","6° de primaria","1° de secundaria","2° de secundaria","3° de secundaria","Otro"];
 
 let view = "welcome";
@@ -230,6 +240,8 @@ function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e)
 function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
 
 function fam(){ return lsGet(LS_FAM, null); }
+function isGuest(){ return !fam() && !!(lsGet(LS_GUEST, null) || {}).on; }
+function guestTests(){ return lsGet(LS_GUEST_T, []); }
 function setFam(f){ lsSet(LS_FAM, f); updateBrand(); }
 function activeKid(){
   const f = fam(); if(!f || !f.alumnos || !f.alumnos.length) return null;
@@ -261,6 +273,7 @@ async function flush(){
   updateSync();
 }
 async function loadPractice(){
+  if(isGuest()){ practiceData = guestTests().slice(-30); return; }
   const kid = activeKid(); if(!kid){ practiceData = []; return; }
   const cache = lsGet(LS_CACHE, {});
   try{
@@ -270,6 +283,7 @@ async function loadPractice(){
   }catch(e){ practiceData = cache[kid.id] || []; }
 }
 function practiceList(){
+  if(isGuest()) return practiceData.slice().sort((a,b)=>a.fecha-b.fecha);
   const kid = activeKid();
   const ids = new Set(practiceData.map(t=>t.id));
   const mine = pending().filter(x => !x.token || (kid && x.token===kid.token)).map(x=>x.t);
@@ -378,9 +392,38 @@ function errText(e){
 function setView(v, wide){
   view = v;
   document.body.classList.toggle("wide", !!wide);
-  const nb = $("navBtn"); nb.hidden = (v==="welcome"); nb.textContent = "Inicio";
+  const nb = $("navBtn"); nb.hidden = (v==="welcome" || v==="quiz"); nb.textContent = "Inicio";
+  const ob = $("outBtn");
+  ob.hidden = !(fam() || isGuest()) || v==="quiz" || v==="logout";
+  ob.textContent = fam() ? "Cerrar sesión" : "Salir";
   if(v!=="panel") stopPoll();
-  window.scrollTo(0,0);
+  if(lastView !== v) window.scrollTo(0,0);
+  lastView = v;
+}
+let lastView = "";
+function renderLogout(){
+  if(isGuest()){ lsSet(LS_GUEST, {on:false}); updateBrand(); return renderWelcome(); }
+  const f = fam(); if(!f) return renderWelcome();
+  const kid = activeKid();
+  setView("logout");
+  $app().innerHTML = `
+  <section class="card hello">
+    <h1>¿Cerrar sesión?</h1>
+    <p>Se cerrará la cuenta de <b>${esc(f.usuario)}</b> en este aparato.${kid ? ` Para que ${esc(kid.nombre)} vuelva a practicar aquí, entra otra vez con tu usuario y contraseña.` : ""}</p>
+    <p class="muted" style="font-size:.9rem">Las pruebas no se borran: siguen guardadas en tu cuenta.</p>
+    <div class="actions center">
+      <button class="btn" id="oYes" type="button">Sí, cerrar sesión</button>
+      <button class="btn alt" id="oNo" type="button">Cancelar</button>
+    </div>
+  </section>`;
+  $("oYes").onclick = async ()=>{
+    $("oYes").disabled = true;
+    await flush();                          // sube lo pendiente antes de salir
+    lsDel(LS_FAM); lsDel(LS_CACHE);
+    panelCreds = null; panelData = null; stopPoll();
+    updateBrand(); renderWelcome();
+  };
+  $("oNo").onclick = renderWelcome;
 }
 function stopPoll(){ if(pollTimer){ clearInterval(pollTimer); pollTimer=null; } }
 function updateBrand(){
@@ -392,17 +435,37 @@ function updateBrand(){
 function renderWelcome(){
   setView("welcome"); panelCreds = null; panelData = null; panelSel = null; quiz = null;
   const f = fam(), kid = activeKid();
+  if(isGuest()){
+    const n = guestTests().length;
+    $app().innerHTML = `
+    <section class="card hello">
+      <h1>¿Quién va a entrar?</h1>
+      <div class="who">
+        <button class="whoBtn" id="gK" type="button">${CROWN}<b>Alumno</b><span>Hacer una prueba</span></button>
+        <button class="whoBtn dad" id="gP" type="button">${BARS}<b>Papá o mamá</b><span>Ver avance${n ? ` (${n} prueba${n===1?"":"s"})` : ""}</span></button>
+      </div>
+      <div class="note">Estás usando la app <b>sin cuenta</b>. Los resultados se guardan solo en este aparato.
+        <button class="link inl" id="gReg" type="button">Crear cuenta gratis</button> para verlos desde cualquier celular.</div>
+    </section>`;
+    $("gK").onclick = renderHome;
+    $("gP").onclick = renderGuestPanel;
+    $("gReg").onclick = ()=>renderRegister();
+    return;
+  }
   if(!f || !kid){
     $app().innerHTML = `
     <section class="card hello">
       <h1>Practica las tablas del 1 al 9</h1>
-      <p>Pruebas cortas de ${N_Q} preguntas que se adaptan a lo que tu hijo necesita practicar. Tú ves su avance desde tu celular.</p>
+      <p>Pruebas cortas de ${N_Q} preguntas que se adaptan a lo que cada niño necesita practicar.</p>
+      <button class="btn big" id="wGuest" type="button">Practicar ahora</button>
+      <p class="muted" style="margin:-4px 0 0;font-size:.9rem">Sin cuenta y sin contraseña.</p>
       <div class="who">
-        <button class="whoBtn" id="wReg" type="button">${CROWN}<b>Crear cuenta</b><span>Soy nuevo</span></button>
+        <button class="whoBtn" id="wReg" type="button">${CROWN}<b>Crear cuenta</b><span>Para ver el avance desde cualquier celular</span></button>
         <button class="whoBtn dad" id="wLog" type="button">${BARS}<b>Iniciar sesión</b><span>Ya tengo cuenta</span></button>
       </div>
     </section>`;
-    $("wReg").onclick = renderRegister;
+    $("wGuest").onclick = ()=>{ lsSet(LS_GUEST, {on:true}); renderHome(); };
+    $("wReg").onclick = ()=>renderRegister();
     $("wLog").onclick = ()=>renderLogin();
     return;
   }
@@ -417,7 +480,17 @@ function renderWelcome(){
   </section>`;
   $("wK").onclick = renderHome;
   $("wP").onclick = ()=>renderLogin();
-  $("wNew").onclick = renderRegister;
+  $("wNew").onclick = ()=>renderRegister();
+}
+
+/* ---------- avance sin cuenta (solo en este aparato) ---------- */
+function renderGuestPanel(){
+  panelData = { guest:true, es_admin:false, nombre:"", usuario:"",
+    alumnos:[{id:"local", nombre:"tu hijo", grado:"", padre:"", padre_nombre:"", rol:"papa"}],
+    pruebas: guestTests().map(t=>({...t, alumno_id:"local"})) };
+  panelSel = "local";
+  setView("panel", true);
+  renderKid("local");
 }
 
 /* ---------- registro ---------- */
@@ -487,6 +560,13 @@ function renderRegister(step, errMsg){
     try{
       const s = await rpc("registrar", {usuario:d.usuario, clave:d.clave, nombre:d.nombre, rol:d.rol, hijo, grado});
       saveSession(s, false);
+      const newKid = activeKid();
+      const gt = guestTests();
+      if(gt.length && newKid){   // las pruebas hechas sin cuenta pasan a la cuenta nueva
+        lsSet(LS_PENDING, pending().concat(gt.map(t=>({token:newKid.token, t}))));
+        lsDel(LS_GUEST_T);
+      }
+      lsSet(LS_GUEST, {on:false});
       flush();
       const kid = activeKid();
       regDraft = {};
@@ -512,9 +592,11 @@ function renderDone(s, kid){
 
 /* ---------- alumno ---------- */
 async function renderHome(){
-  const kid = activeKid(); if(!kid) return renderWelcome();
+  const kid = activeKid();
+  if(!kid && !isGuest()) return renderWelcome();
+  const hola = kid ? `¡Hola, ${esc(kid.nombre)}!` : "¡Hola!";
   setView("home");
-  $app().innerHTML = `<section class="card hello"><h1>¡Hola, ${esc(kid.nombre)}!</h1><p>Cargando…</p></section>`;
+  $app().innerHTML = `<section class="card hello"><h1>${hola}</h1><p>Cargando…</p></section>`;
   await flush(); await loadPractice();
   if(view!=="home") return;
   const list = practiceList(); const last = list[list.length-1];
@@ -523,7 +605,7 @@ async function renderHome(){
   const prac = TABLES.filter(t=>status[t].st==="practicar");
   $app().innerHTML = `
   <section class="card hello">
-    <h1>¡Hola, ${esc(kid.nombre)}!</h1>
+    <h1>${hola}</h1>
     <p>Cada prueba tiene ${N_Q} preguntas de las tablas del 1 al 9. Escribe tu respuesta y presiona la palomita.</p>
     <button class="btn" id="start" type="button">Iniciar prueba</button>
     ${last ? `<p class="muted" style="font-size:.95rem">Tu última calificación: <b style="color:${gradeColor(last.calificacion)}">${last.calificacion}</b></p>` : ""}
@@ -537,7 +619,7 @@ async function renderHome(){
 
 let quiz = null;
 function startQuiz(){
-  quiz = {qs:buildQuiz(), i:0, input:"", res:[], t0:performance.now(), locked:false, started:Date.now(), token:activeKid().token};
+  quiz = {qs:buildQuiz(), i:0, input:"", res:[], t0:performance.now(), locked:false, started:Date.now(), token:(activeKid() || {}).token || null, guest:isGuest()};
   renderQ();
 }
 function renderQ(){
@@ -590,6 +672,11 @@ async function finish(){
     duracionSeg: Math.round((Date.now()-quiz.started)/1000),
     respuestas: quiz.res
   };
+  if(quiz.guest){
+    lsSet(LS_GUEST_T, guestTests().concat([t]).slice(-300));   // sin cuenta: solo en este aparato
+    renderResult(t);
+    return;
+  }
   lsSet(LS_PENDING, pending().concat([{token:quiz.token, t}]));
   renderResult(t);
   await flush();
@@ -647,6 +734,7 @@ function renderLogin(){
     try{
       const d = await rpc("panel", {usuario, clave});
       saveSession(d, true);
+      lsSet(LS_GUEST, {on:false});
       const hadPending = pending().length;
       if(hadPending){ await flush(); try{ d.pruebas = (await rpc("panel", {usuario, clave})).pruebas; }catch(e){} }
       panelCreds = {usuario, clave}; panelData = d;
@@ -681,12 +769,17 @@ function renderPanel(openIds){
   renderOverview();
 }
 function deviceBox(){
+  if(panelData && panelData.guest){
+    return `<div class="device"><span>Sin cuenta: estos resultados están guardados solo en este aparato.</span>
+      <button class="btn small" id="pReg" type="button">Crear cuenta gratis</button></div>`;
+  }
   const kid = activeKid();
   return `<div class="device"><span>En este aparato practica: <b>${esc(kid ? kid.nombre : "nadie")}</b></span>
-    <button class="link" id="pOut" type="button">Cerrar sesión en este aparato</button></div>`;
+    <button class="link" id="pOut" type="button">Cerrar sesión</button></div>`;
 }
 function bindDevice(){
-  $("pOut").onclick = ()=>{ lsDel(LS_FAM); lsDel(LS_CACHE); updateBrand(); renderWelcome(); };
+  const r = $("pReg"); if(r) r.onclick = ()=>renderRegister();
+  const o = $("pOut"); if(o) o.onclick = renderLogout;
 }
 let adminFilter = {padre:"", q:""};
 function familiesOf(d){
@@ -765,9 +858,9 @@ function renderOverview(){
       </div>` : ""}
     </button>`).join("") || `<div class="card"><p class="muted" style="margin:0">Todavía no hay alumnos registrados.</p></div>`}
   </section>`;
-  document.querySelectorAll(".kidCard").forEach(b=>b.onclick=()=>{ panelSel=b.dataset.id; renderPanel(); });
+  document.querySelectorAll(".kidCard").forEach(b=>b.onclick=()=>{ panelSel=b.dataset.id; renderPanel(); window.scrollTo(0,0); });
   if(d0.es_admin){
-    $("fAlumno").onchange = e=>{ if(e.target.value){ panelSel = e.target.value; renderPanel(); } };
+    $("fAlumno").onchange = e=>{ if(e.target.value){ panelSel = e.target.value; renderPanel(); window.scrollTo(0,0); } };
     $("fPadre").onchange = e=>{ adminFilter.padre = e.target.value; renderPanel(); };
     $("fBuscar").oninput = e=>{ adminFilter.q = e.target.value; applySearch(); };
     applySearch();
@@ -828,8 +921,8 @@ function renderKid(id, openIds){
   <section class="card sec span2">
     <div class="phead">
       <div style="min-width:0"><h2>Avance de ${name}</h2>
-        <p class="muted" style="margin:0">${esc(a.grado || "Sin grado")}${d.es_admin ? ` · ${esc(roleLabel(a.rol))}: ${esc(a.padre_nombre)} (@${esc(a.padre)})` : ""}</p></div>
-      ${onDevice ? `<span class="chip g">Practica en este aparato</span>` : `<button class="btn alt small" id="kUse" type="button">Que ${name} practique en este aparato</button>`}
+        <p class="muted" style="margin:0">${d.guest ? "Sin cuenta · en este aparato" : esc(a.grado || "Sin grado")}${d.es_admin ? ` · ${esc(roleLabel(a.rol))}: ${esc(a.padre_nombre)} (@${esc(a.padre)})` : ""}</p></div>
+      ${d.guest ? "" : onDevice ? `<span class="chip g">Practica en este aparato</span>` : `<button class="btn alt small" id="kUse" type="button">Que ${name} practique en este aparato</button>`}
     </div>
     <div class="kpis">
       <div class="kpi"><span>Pruebas</span><b>${n}</b></div>
@@ -881,13 +974,14 @@ function renderKid(id, openIds){
 
   <section class="card sec span2">${deviceBox()}</section>
   </div>`;
-  if(showOverview()) $("kBack").onclick = ()=>{ panelSel=null; renderPanel(); };
-  if(d.es_admin) $("kSwitch").onchange = e=>{ panelSel = e.target.value; renderPanel(); };
-  if(!onDevice) $("kUse").onclick = ()=>{ const f = fam(); f.activo = id; setFam(f); renderPanel(); };
+  if(showOverview()) $("kBack").onclick = ()=>{ panelSel=null; renderPanel(); window.scrollTo(0,0); };
+  if(d.es_admin) $("kSwitch").onchange = e=>{ panelSel = e.target.value; renderPanel(); window.scrollTo(0,0); };
+  if(!d.guest && !onDevice) $("kUse").onclick = ()=>{ const f = fam(); f.activo = id; setFam(f); renderPanel(); };
   bindDevice();
 }
 
 /* ---------- arranque ---------- */
+$("outBtn").onclick = ()=>{ if(view==="quiz") return; renderLogout(); };
 $("navBtn").onclick = ()=>{
   if(view==="quiz" && quiz && quiz.i>0 && quiz.i<N_Q) return;   // no salir a media prueba
   renderWelcome();

@@ -1,4 +1,4 @@
-TABLAS - VERSIÓN 3
+TABLAS - VERSIÓN 4
 
 Esta carpeta trae todo lo que necesita la app:
   index.html   -> la app completa (diseño y código en un solo archivo)
@@ -13,4 +13,4 @@ CÓMO SUBIRLA A GITHUB
 Vercel la publica solo en menos de un minuto.
 
 El archivo app.js que ya está en GitHub ya no se usa. Puedes dejarlo o borrarlo.
-En la parte de abajo de la app debe decir "Versión 3".
+En la parte de abajo de la app debe decir "Versión 4".
