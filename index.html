@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -10,7 +11,7 @@
 <meta name="theme-color" content="#ff6b6b">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" href="icon.png">
-<title>Tablas de Ximena</title>
+<title>Tablas del 1 al 9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
@@ -117,6 +118,54 @@ details.h summary{cursor:pointer;display:flex;justify-content:space-between;gap:
 details.h summary::-webkit-details-marker{display:none}
 details.h .review{margin-top:10px}
 .sync{font-size:.8rem;color:var(--muted)}
+/* Formularios */
+.form{display:flex;flex-direction:column;gap:14px;max-width:520px;width:100%;margin-inline:auto}
+.form form{display:flex;flex-direction:column;gap:14px}
+.eyebrow{margin:0;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-ink)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.field .lbl{font-weight:800}
+.field small{color:var(--muted);font-size:.85rem}
+.field input,.field select{font:inherit;font-size:1.05rem;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.field input:focus,.field select:focus{border-color:var(--coral);outline:none}
+.seg{display:flex;gap:8px}
+.seg label{flex:1;cursor:pointer}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;text-align:center;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);font-weight:800}
+.seg input:checked + span{border-color:var(--coral);background:var(--soft);color:var(--coral-ink)}
+.seg input:focus-visible + span{outline:3px solid var(--sun);outline-offset:2px}
+.err{margin:0;min-height:1.4em;color:var(--bad);font-weight:700}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.actions.center{justify-content:center;margin-top:8px}
+.foot{margin:4px 0 0;text-align:center}
+.recap{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--soft);border-radius:14px;padding:10px 20px}
+.recap span{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}
+.recap b{font-family:var(--display);font-size:1.4rem}
+.btn.small{font-size:.95rem;padding:10px 16px}
+/* Panel ancho */
+body.wide .wrap{max-width:1080px}
+.phead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.device{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.device .link{padding-inline:0}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.kidCard{background:var(--surface);border-radius:20px;padding:18px;text-align:left;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 0 var(--line),0 12px 30px -20px rgba(80,40,60,.35);transition:transform .1s}
+.kidCard:hover{transform:translateY(-2px);outline:2px solid var(--coral)}
+.kcTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.kcTop h3{font-size:1.35rem}
+.kcTop p{margin:2px 0 0;font-size:.85rem}
+.kcAvg{font-family:var(--display);font-size:2rem;line-height:1;font-variant-numeric:tabular-nums}
+.kcMeta{margin:0;font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.chips.left{justify-content:flex-start}
+.back{align-self:flex-start;padding-left:0}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;background:var(--soft);border-radius:16px;padding:14px}
+.filters .field input,.filters .field select{background:var(--surface);font-size:1rem;padding:10px 12px}
+.kbar{display:flex;justify-content:space-between;align-items:flex-end;gap:10px 16px;flex-wrap:wrap}
+.field.inline{flex-direction:row;align-items:center;gap:8px;flex-wrap:wrap}
+.field.inline select{width:auto;max-width:100%;font-size:1rem;padding:8px 12px}
+.kgrid{display:grid;grid-template-columns:1fr;gap:20px}
+.kgrid > *{min-width:0}
+@media (min-width:900px){ .kgrid{grid-template-columns:1fr 1fr} .kgrid .span2{grid-column:1 / -1} }
+.quiz{max-width:560px;width:100%;margin-inline:auto}
+@media (max-width:480px){ .card{padding:18px;border-radius:20px} .whoBtn b{font-size:1.3rem} }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
 .pop{animation:pop .3s ease}
@@ -127,13 +176,731 @@ details.h .review{margin-top:10px}
   <header class="top">
     <div class="brand">
       <svg class="crown" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 30 L4 12 L13 20 L20 8 L27 20 L36 12 L34 30 Z" fill="var(--sun)" stroke="var(--coral-ink)" stroke-width="2" stroke-linejoin="round"/><circle cx="20" cy="8" r="2.5" fill="var(--coral)"/><circle cx="4" cy="12" r="2.2" fill="var(--mint)"/><circle cx="36" cy="12" r="2.2" fill="var(--mint)"/><rect x="6" y="30" width="28" height="4" rx="2" fill="var(--coral)"/></svg>
-      Tablas de Ximena
+      <span id="brandName">Tablas del 1 al 9</span>
     </div>
-    <button class="link" id="navBtn" type="button">Panel de papás</button>
+    <button class="link" id="navBtn" type="button" hidden>Inicio</button>
   </header>
   <main id="app"></main>
   <p class="sync" id="sync"></p>
+  <p class="sync" style="text-align:center;opacity:.6">Versión 3</p>
 </div>
-<script src="app.js"></script>
+<script>
+/* ====== CONFIGURACIÓN DE SUPABASE ====== */
+const SUPABASE_URL = "https://xchugqfleewewjfsihdz.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_acxxGAthw0D71O-XVjEgAA_33q_1pEa";
+/* ======================================= */
+
+const N_Q = 15;
+const TABLES = [1,2,3,4,5,6,7,8,9];
+const LS_PENDING = "tablasXimena.pending";
+const LS_CACHE = "tablas.cache";
+const LS_FAM = "tablas.familia";
+const GRADOS = ["Preescolar","1° de primaria","2° de primaria","3° de primaria","4° de primaria","5° de primaria","6° de primaria","1° de secundaria","2° de secundaria","3° de secundaria","Otro"];
+
+let view = "welcome";
+let practiceData = [];
+let panelData = null;      // respuesta de panel()
+let panelCreds = null;     // solo en memoria
+let panelSel = null;       // id del alumno abierto en el panel
+let pollTimer = null;
+
+/* ---------- Supabase ---------- */
+async function rpc(fn, body){
+  let r;
+  try{
+    r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+      method: "POST",
+      headers: { "apikey": SUPABASE_ANON_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify(body || {})
+    });
+  }catch(e){ throw new Error("red"); }
+  const text = await r.text();
+  let data = null; try{ data = text ? JSON.parse(text) : null; }catch(e){}
+  if(!r.ok){
+    const detail = data ? [data.code, data.message].filter(Boolean).join(" ") : "";
+    throw new Error(detail || ("Error " + r.status));
+  }
+  if(data && !Array.isArray(data) && data.error) throw new Error(data.error);
+  return data;
+}
+
+/* ---------- almacenamiento local ---------- */
+function lsGet(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+function fam(){ return lsGet(LS_FAM, null); }
+function setFam(f){ lsSet(LS_FAM, f); updateBrand(); }
+function activeKid(){
+  const f = fam(); if(!f || !f.alumnos || !f.alumnos.length) return null;
+  return f.alumnos.find(a=>a.id===f.activo) || f.alumnos[0];
+}
+function roleLabel(rol){ return rol==="mama" ? "Mamá" : "Papá"; }
+function saveSession(s, keepActive){
+  const prev = fam();
+  const own = s.alumnos.filter(a=>a.padre===s.usuario);
+  let activo = keepActive && prev && s.alumnos.some(a=>a.id===prev.activo) ? prev.activo : null;
+  if(!activo) activo = (own[0] || s.alumnos[0] || {}).id || null;
+  setFam({usuario:s.usuario, nombre:s.nombre, rol:s.rol, es_admin:!!s.es_admin,
+          alumnos:s.alumnos.map(a=>({id:a.id,nombre:a.nombre,grado:a.grado,token:a.token,padre:a.padre})), activo});
+}
+
+/* pruebas pendientes de subir: [{token, t}] (las de la versión anterior no traen token) */
+function pending(){ return lsGet(LS_PENDING, []).map(x => x && x.t ? x : {token:null, t:x}); }
+async function flush(){
+  const p = pending(); if(!p.length) return;
+  const kid = activeKid();
+  const left = [];
+  for(const item of p){
+    const token = item.token || (kid && kid.token);
+    if(!token){ left.push(item); continue; }
+    try{ await rpc("guardar_prueba", {token, p: item.t}); }
+    catch(e){ left.push({token, t:item.t}); }
+  }
+  lsSet(LS_PENDING, left);
+  updateSync();
+}
+async function loadPractice(){
+  const kid = activeKid(); if(!kid){ practiceData = []; return; }
+  const cache = lsGet(LS_CACHE, {});
+  try{
+    const d = await rpc("datos_practica", {token: kid.token});
+    practiceData = Array.isArray(d) ? d : [];
+    cache[kid.id] = practiceData; lsSet(LS_CACHE, cache);
+  }catch(e){ practiceData = cache[kid.id] || []; }
+}
+function practiceList(){
+  const kid = activeKid();
+  const ids = new Set(practiceData.map(t=>t.id));
+  const mine = pending().filter(x => !x.token || (kid && x.token===kid.token)).map(x=>x.t);
+  return practiceData.concat(mine.filter(p=>!ids.has(p.id))).sort((a,b)=>a.fecha-b.fecha);
+}
+function updateSync(){
+  const n = pending().length;
+  document.getElementById("sync").textContent = n ? `${n} prueba(s) guardada(s) en este aparato; se subirán cuando haya internet.` : "";
+}
+
+/* ---------- modelo de aprendizaje ---------- */
+function factStats(list){
+  const byTable = {}; TABLES.forEach(t=>byTable[t]=[]);
+  const factMiss = {};
+  const ordered = list.slice().sort((a,b)=>b.fecha-a.fecha);
+  ordered.forEach((t,ti)=>{
+    (t.respuestas||[]).forEach(r=>{
+      if(byTable[r.a]) byTable[r.a].push(r);
+      const k = r.a+"×"+r.b;
+      if(!factMiss[k]) factMiss[k] = {a:r.a,b:r.b,miss:0,total:0,recentMiss:0};
+      factMiss[k].total++;
+      if(!r.ok){ factMiss[k].miss++; if(ti<3) factMiss[k].recentMiss++; }
+    });
+  });
+  return {byTable, factMiss};
+}
+function tableStatus(list){
+  const {byTable} = factStats(list);
+  const out = {};
+  TABLES.forEach(t=>{
+    const all = byTable[t];
+    const recent = all.slice(0,12);
+    const n = recent.length;
+    const acc = n ? recent.filter(r=>r.ok).length/n : null;
+    const totalAcc = all.length ? all.filter(r=>r.ok).length/all.length : null;
+    const times = recent.filter(r=>r.ok && r.ms).map(r=>r.ms);
+    const avgMs = times.length ? times.reduce((s,x)=>s+x,0)/times.length : null;
+    let st = "nueva";
+    if(n >= 8 && acc >= 0.9 && (avgMs===null || avgMs < 8000)) st = "dominada";
+    else if(n >= 4 && acc < 0.7) st = "practicar";
+    else if(n >= 1) st = "camino";
+    out[t] = {n, acc, totalAcc, total:all.length, avgMs, st};
+  });
+  return out;
+}
+function weightFor(s){
+  if(s.st==="dominada") return 0.2;
+  if(s.st==="nueva") return 1.2;
+  return 1 + (1 - s.acc) * 3;
+}
+function buildQuiz(){
+  const list = practiceList();
+  const status = tableStatus(list);
+  const {factMiss} = factStats(list);
+  const qs = []; const used = new Set();
+  const perTable = {}; TABLES.forEach(t=>perTable[t]=0);
+  Object.values(factMiss).filter(f=>f.recentMiss>0).sort((a,b)=>b.recentMiss-a.recentMiss)
+    .slice(0,4).forEach(f=>{ const k=f.a+"×"+f.b; if(!used.has(k)){used.add(k); qs.push({a:f.a,b:f.b}); perTable[f.a]++;} });
+  let guard = 0;
+  while(qs.length < N_Q && guard++ < 500){
+    const w = TABLES.map(t=>{
+      const s = status[t]; let x = weightFor(s);
+      if(s.st==="dominada" && perTable[t] >= 1) x = 0;
+      return x;
+    });
+    const sum = w.reduce((a,b)=>a+b,0); if(!sum) break;
+    let r = Math.random()*sum, t = TABLES[0];
+    for(let i=0;i<w.length;i++){ r -= w[i]; if(r<=0){ t = TABLES[i]; break; } }
+    const b = 1 + Math.floor(Math.random()*10);
+    const k = t+"×"+b; if(used.has(k)) continue;
+    used.add(k); qs.push({a:t,b}); perTable[t]++;
+  }
+  while(qs.length < N_Q){ const a=1+Math.floor(Math.random()*9), b=1+Math.floor(Math.random()*10); const k=a+"×"+b; if(!used.has(k)){used.add(k);qs.push({a,b});} }
+  for(let i=qs.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [qs[i],qs[j]]=[qs[j],qs[i]]; }
+  return qs;
+}
+
+/* ---------- utilidades ---------- */
+const $app = () => document.getElementById("app");
+const $ = id => document.getElementById(id);
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function fmtDate(ms){ return new Date(ms).toLocaleString("es-MX",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); }
+function grade10(ok,total){ return Math.round(ok/total*100)/10; }
+function gradeColor(g){ return g>=9 ? "var(--good)" : g>=7 ? "var(--warn)" : "var(--bad)"; }
+function avgOf(list){ return list.length ? Math.round(list.reduce((s,t)=>s+Number(t.calificacion),0)/list.length*10)/10 : null; }
+function star(on){ return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.2l-5.9 3.3 1.3-6.6-4.9-4.5 6.6-.8z" fill="${on?'var(--sun)':'var(--line)'}" stroke="${on?'var(--coral-ink)':'none'}" stroke-width="1"/></svg>`; }
+const ST_LABEL = {dominada:["Dominada","g"],camino:["En camino","w"],practicar:["Practicar","b"],nueva:["Sin datos","n"]};
+const CROWN = `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 30 L4 12 L13 20 L20 8 L27 20 L36 12 L34 30 Z" fill="var(--sun)" stroke="var(--coral-ink)" stroke-width="2" stroke-linejoin="round"/><rect x="6" y="30" width="28" height="4" rx="2" fill="var(--coral)"/></svg>`;
+const BARS = `<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="22" width="6" height="12" rx="2" fill="var(--mint)"/><rect x="17" y="14" width="6" height="20" rx="2" fill="var(--sun)"/><rect x="27" y="6" width="6" height="28" rx="2" fill="var(--coral)"/></svg>`;
+const ERRORS = {
+  red: "No hay conexión. Revisa tu internet e intenta de nuevo.",
+  bloqueado: "Demasiados intentos con este usuario. Espera 15 minutos.",
+  incorrecto: "Usuario o contraseña incorrectos.",
+  usuario_existe: "Ese nombre de usuario ya está ocupado. Elige otro.",
+  usuario_invalido: "El usuario debe tener de 3 a 30 letras o números, sin espacios ni acentos.",
+  clave_corta: "La contraseña debe tener al menos 4 caracteres.",
+  faltan_datos: "Faltan datos. Revisa que todo esté lleno."
+};
+function errText(e){
+  const m = (e && e.message) || "";
+  if(ERRORS[m]) return ERRORS[m];
+  if(/Could not find the function|PGRST202|schema cache/i.test(m)) return "La base de datos no está actualizada. Vuelve a correr el SQL en Supabase. (Detalle: " + m + ")";
+  return "Algo salió mal. Intenta de nuevo. (Detalle: " + m + ")";
+}
+
+function setView(v, wide){
+  view = v;
+  document.body.classList.toggle("wide", !!wide);
+  const nb = $("navBtn"); nb.hidden = (v==="welcome"); nb.textContent = "Inicio";
+  if(v!=="panel") stopPoll();
+  window.scrollTo(0,0);
+}
+function stopPoll(){ if(pollTimer){ clearInterval(pollTimer); pollTimer=null; } }
+function updateBrand(){
+  const k = activeKid();
+  $("brandName").textContent = k ? `Tablas de ${k.nombre}` : "Tablas del 1 al 9";
+}
+
+/* ---------- bienvenida ---------- */
+function renderWelcome(){
+  setView("welcome"); panelCreds = null; panelData = null; panelSel = null; quiz = null;
+  const f = fam(), kid = activeKid();
+  if(!f || !kid){
+    $app().innerHTML = `
+    <section class="card hello">
+      <h1>Practica las tablas del 1 al 9</h1>
+      <p>Pruebas cortas de ${N_Q} preguntas que se adaptan a lo que tu hijo necesita practicar. Tú ves su avance desde tu celular.</p>
+      <div class="who">
+        <button class="whoBtn" id="wReg" type="button">${CROWN}<b>Crear cuenta</b><span>Soy nuevo</span></button>
+        <button class="whoBtn dad" id="wLog" type="button">${BARS}<b>Iniciar sesión</b><span>Ya tengo cuenta</span></button>
+      </div>
+    </section>`;
+    $("wReg").onclick = renderRegister;
+    $("wLog").onclick = ()=>renderLogin();
+    return;
+  }
+  $app().innerHTML = `
+  <section class="card hello">
+    <h1>¿Quién va a entrar?</h1>
+    <div class="who">
+      <button class="whoBtn" id="wK" type="button">${CROWN}<b>Soy ${esc(kid.nombre)}</b><span>Hacer una prueba</span></button>
+      <button class="whoBtn dad" id="wP" type="button">${BARS}<b>${roleLabel(f.rol)}</b><span>Ver historial y avance</span></button>
+    </div>
+    <p class="foot"><button class="link" id="wNew" type="button">¿Otra familia? Crear cuenta nueva</button></p>
+  </section>`;
+  $("wK").onclick = renderHome;
+  $("wP").onclick = ()=>renderLogin();
+  $("wNew").onclick = renderRegister;
+}
+
+/* ---------- registro ---------- */
+let regDraft = {};
+function renderRegister(step, errMsg){
+  setView("register");
+  step = step === 2 ? 2 : 1;
+  if(typeof errMsg !== "string") errMsg = "";
+  const d = regDraft;
+  if(step===1){
+    $app().innerHTML = `
+    <section class="card form">
+      <p class="eyebrow">Paso 1 de 2</p>
+      <h2>Tus datos</h2>
+      <form id="rf" novalidate>
+        <div class="field"><label for="rNombre">Tu nombre</label><input id="rNombre" autocomplete="name" value="${esc(d.nombre)}" maxlength="60"></div>
+        <div class="field"><span class="lbl" id="rRolL">Soy</span>
+          <div class="seg" role="radiogroup" aria-labelledby="rRolL">
+            <label><input type="radio" name="rRol" id="rRolPapa" value="papa" ${d.rol!=="mama"?"checked":""}><span>Papá</span></label>
+            <label><input type="radio" name="rRol" id="rRolMama" value="mama" ${d.rol==="mama"?"checked":""}><span>Mamá</span></label>
+          </div></div>
+        <div class="field"><label for="rUser">Nombre de usuario</label><input id="rUser" autocomplete="username" autocapitalize="none" spellcheck="false" value="${esc(d.usuario)}" maxlength="30"><small>Sin espacios ni acentos. Ejemplo: mama_de_yamel</small></div>
+        <div class="field"><label for="rPass">Contraseña</label><input id="rPass" type="password" autocomplete="new-password" value="${esc(d.clave)}"><small>Mínimo 4 caracteres.</small></div>
+        <div class="field"><label for="rPass2">Repite la contraseña</label><input id="rPass2" type="password" autocomplete="new-password" value="${esc(d.clave)}"></div>
+        <p class="err" id="rErr" role="alert">${esc(errMsg||"")}</p>
+        <div class="actions"><button class="btn" type="submit">Siguiente</button><button class="btn alt" type="button" id="rBack">Cancelar</button></div>
+      </form>
+    </section>`;
+    $("rBack").onclick = ()=>{ regDraft = {}; renderWelcome(); };
+    $("rf").onsubmit = e=>{
+      e.preventDefault();
+      const nombre = $("rNombre").value.trim();
+      const rol = $("rRolMama").checked ? "mama" : "papa";
+      const usuario = $("rUser").value.trim().toLowerCase();
+      const clave = $("rPass").value, clave2 = $("rPass2").value;
+      const err = $("rErr");
+      if(!nombre) return err.textContent = "Escribe tu nombre.";
+      if(!/^[a-z0-9_.-]{3,30}$/.test(usuario)) return err.textContent = ERRORS.usuario_invalido;
+      if(clave.length < 4) return err.textContent = ERRORS.clave_corta;
+      if(clave !== clave2) return err.textContent = "Las contraseñas no coinciden.";
+      regDraft = {...regDraft, nombre, rol, usuario, clave};
+      renderRegister(2);
+    };
+    return;
+  }
+  $app().innerHTML = `
+  <section class="card form">
+    <p class="eyebrow">Paso 2 de 2</p>
+    <h2>Datos de tu hijo o hija</h2>
+    <form id="rf2" novalidate>
+      <div class="field"><label for="rHijo">Nombre</label><input id="rHijo" autocomplete="off" value="${esc(d.hijo)}" maxlength="40"><small>Así aparecerá en el botón: “Soy …”.</small></div>
+      <div class="field"><label for="rGrado">Grado escolar</label>
+        <select id="rGrado">${GRADOS.map(g=>`<option ${d.grado===g?"selected":""}>${g}</option>`).join("")}</select></div>
+      <p class="err" id="rErr2" role="alert">${esc(errMsg||"")}</p>
+      <div class="actions"><button class="btn" type="submit" id="rGo">Crear cuenta</button><button class="btn alt" type="button" id="rPrev">Atrás</button></div>
+    </form>
+  </section>`;
+  if(!d.grado) $("rGrado").value = "2° de primaria";
+  $("rPrev").onclick = ()=>{ regDraft.hijo = $("rHijo").value; regDraft.grado = $("rGrado").value; renderRegister(1); };
+  $("rf2").onsubmit = async e=>{
+    e.preventDefault();
+    const hijo = $("rHijo").value.trim(), grado = $("rGrado").value;
+    const err = $("rErr2");
+    if(!hijo) return err.textContent = "Escribe el nombre de tu hijo o hija.";
+    regDraft = {...regDraft, hijo, grado};
+    $("rGo").disabled = true; err.textContent = "Creando cuenta…";
+    try{
+      const s = await rpc("registrar", {usuario:d.usuario, clave:d.clave, nombre:d.nombre, rol:d.rol, hijo, grado});
+      saveSession(s, false);
+      flush();
+      const kid = activeKid();
+      regDraft = {};
+      renderDone(s, kid);
+    }catch(x){
+      if(x.message==="usuario_existe" || x.message==="usuario_invalido" || x.message==="clave_corta") return renderRegister(1, errText(x));
+      $("rGo").disabled = false; err.textContent = errText(x);
+    }
+  };
+}
+function renderDone(s, kid){
+  setView("done");
+  $app().innerHTML = `
+  <section class="card hello">
+    <h1>¡Listo, ${esc(s.nombre)}!</h1>
+    <p>La cuenta de ${esc(kid.nombre)} está creada y este aparato ya quedó listo para practicar.</p>
+    <div class="recap"><span>Tu usuario</span><b>${esc(s.usuario)}</b></div>
+    <p class="muted" style="font-size:.9rem">Para ver su avance desde otro celular o computadora, abre esta misma página y entra con tu usuario y contraseña.</p>
+    <button class="btn" id="dGo" type="button">Empezar</button>
+  </section>`;
+  $("dGo").onclick = renderWelcome;
+}
+
+/* ---------- alumno ---------- */
+async function renderHome(){
+  const kid = activeKid(); if(!kid) return renderWelcome();
+  setView("home");
+  $app().innerHTML = `<section class="card hello"><h1>¡Hola, ${esc(kid.nombre)}!</h1><p>Cargando…</p></section>`;
+  await flush(); await loadPractice();
+  if(view!=="home") return;
+  const list = practiceList(); const last = list[list.length-1];
+  const status = tableStatus(list);
+  const dom = TABLES.filter(t=>status[t].st==="dominada");
+  const prac = TABLES.filter(t=>status[t].st==="practicar");
+  $app().innerHTML = `
+  <section class="card hello">
+    <h1>¡Hola, ${esc(kid.nombre)}!</h1>
+    <p>Cada prueba tiene ${N_Q} preguntas de las tablas del 1 al 9. Escribe tu respuesta y presiona la palomita.</p>
+    <button class="btn" id="start" type="button">Iniciar prueba</button>
+    ${last ? `<p class="muted" style="font-size:.95rem">Tu última calificación: <b style="color:${gradeColor(last.calificacion)}">${last.calificacion}</b></p>` : ""}
+    ${(dom.length||prac.length) ? `<div class="chips">
+      ${dom.map(t=>`<span class="chip g">★ Tabla del ${t}</span>`).join("")}
+      ${prac.map(t=>`<span class="chip b">Practicando la del ${t}</span>`).join("")}
+    </div>` : ""}
+  </section>`;
+  $("start").onclick = startQuiz;
+}
+
+let quiz = null;
+function startQuiz(){
+  quiz = {qs:buildQuiz(), i:0, input:"", res:[], t0:performance.now(), locked:false, started:Date.now(), token:activeKid().token};
+  renderQ();
+}
+function renderQ(){
+  setView("quiz");
+  const q = quiz.qs[quiz.i];
+  const dots = quiz.qs.map((_,k)=>`<span class="dot ${k<quiz.i ? (quiz.res[k].ok?'ok':'no') : k===quiz.i?'cur':''}"></span>`).join("");
+  $app().innerHTML = `
+  <section class="card quiz">
+    <div class="qhead"><span>Pregunta ${quiz.i+1} de ${N_Q}</span><div class="dots" aria-hidden="true">${dots}</div></div>
+    <div class="q pop">${q.a} × ${q.b}</div>
+    <div class="ans" id="ans" aria-live="polite">${esc(quiz.input)||"&nbsp;"}</div>
+    <div class="fb" id="fb" aria-live="polite"></div>
+    <div class="pad">
+      ${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="key" data-k="${n}" type="button">${n}</button>`).join("")}
+      <button class="key del" data-k="del" type="button" aria-label="Borrar">Borrar</button>
+      <button class="key" data-k="0" type="button">0</button>
+      <button class="key go" data-k="ok" type="button" aria-label="Revisar">✓</button>
+    </div>
+  </section>`;
+  document.querySelectorAll(".key").forEach(b=>b.onclick=()=>press(b.dataset.k));
+  quiz.t0 = performance.now();
+}
+function press(k){
+  if(!quiz || quiz.locked) return;
+  if(k==="del") quiz.input = quiz.input.slice(0,-1);
+  else if(k==="ok"){ if(quiz.input) check(); return; }
+  else if(quiz.input.length < 3) quiz.input += k;
+  $("ans").innerHTML = esc(quiz.input)||"&nbsp;";
+}
+function check(){
+  quiz.locked = true;
+  const q = quiz.qs[quiz.i]; const val = parseInt(quiz.input,10);
+  const ok = val === q.a*q.b;
+  quiz.res.push({a:q.a,b:q.b,resp:val,ok,ms:Math.round(performance.now()-quiz.t0)});
+  $("ans").classList.add(ok?"ok":"no");
+  const cheers = ["¡Muy bien!","¡Excelente!","¡Así se hace!","¡Perfecto!","¡Bravo!"];
+  $("fb").innerHTML = ok ? `<span style="color:var(--good)">${cheers[Math.floor(Math.random()*cheers.length)]}</span>`
+                         : `<span style="color:var(--bad)">Casi. ${q.a} × ${q.b} = ${q.a*q.b}</span>`;
+  setTimeout(()=>{
+    if(!quiz) return;
+    quiz.i++; quiz.input=""; quiz.locked=false;
+    if(quiz.i >= N_Q) finish(); else renderQ();
+  }, ok ? 900 : 2200);
+}
+async function finish(){
+  const ok = quiz.res.filter(r=>r.ok).length;
+  const t = {
+    id: uuid(), fecha: Date.now(), aciertos: ok, total: N_Q,
+    calificacion: grade10(ok,N_Q),
+    duracionSeg: Math.round((Date.now()-quiz.started)/1000),
+    respuestas: quiz.res
+  };
+  lsSet(LS_PENDING, pending().concat([{token:quiz.token, t}]));
+  renderResult(t);
+  await flush();
+}
+function uuid(){
+  if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==="x"?r:(r&3|8)).toString(16);});
+}
+function renderResult(t){
+  setView("result");
+  const g = t.calificacion;
+  const nStars = g>=9.5?3:g>=8?2:g>=6?1:0;
+  const msg = g===10 ? "¡Perfecto! Eres un as de las tablas." : g>=8 ? "¡Muy buen trabajo! Ya casi todas te salen." : g>=6 ? "¡Vas muy bien! Vamos a practicar las que fallaste." : "Cada prueba te hace más fuerte. ¡Otra vez!";
+  const misses = t.respuestas.filter(r=>!r.ok);
+  $app().innerHTML = `
+  <section class="card result">
+    <div class="stars">${[0,1,2].map(i=>star(i<nStars)).join("")}</div>
+    <div class="grade pop" style="color:${gradeColor(g)}">${g}</div>
+    <div class="muted" style="font-weight:800">${t.aciertos} de ${t.total} correctas</div>
+    <h2 style="font-size:1.4rem">${msg}</h2>
+    ${misses.length ? `<p class="muted" style="margin:0">Estas son las que hay que repasar:</p>
+    <div class="review">${misses.map(r=>`<div class="rv no">${r.a} × ${r.b} = ${r.a*r.b}<small>Escribiste ${r.resp}</small></div>`).join("")}</div>` : ""}
+    <div class="actions center">
+      <button class="btn" id="again" type="button">Otra prueba</button>
+      <button class="btn alt" id="home" type="button">Inicio</button>
+    </div>
+  </section>`;
+  $("again").onclick = async ()=>{ await loadPractice(); startQuiz(); };
+  $("home").onclick = renderHome;
+}
+
+/* ---------- inicio de sesión de papá/mamá ---------- */
+function renderLogin(){
+  setView("login");
+  const f = fam();
+  $app().innerHTML = `
+  <section class="card form">
+    <h2>${f ? `Panel de ${roleLabel(f.rol).toLowerCase()}` : "Iniciar sesión"}</h2>
+    <form id="lf" novalidate>
+      <div class="field"><label for="lUser">Usuario</label><input id="lUser" autocomplete="username" autocapitalize="none" spellcheck="false" value="${esc(f ? f.usuario : "")}"></div>
+      <div class="field"><label for="lPass">Contraseña</label><input id="lPass" type="password" autocomplete="current-password"></div>
+      <p class="err" id="lErr" role="alert"></p>
+      <div class="actions"><button class="btn" type="submit" id="lGo">Entrar</button></div>
+    </form>
+    ${f ? "" : `<p class="foot"><button class="link" id="lReg" type="button">¿No tienes cuenta? Crear cuenta</button></p>`}
+  </section>`;
+  if(!f) $("lReg").onclick = renderRegister;
+  (f ? $("lPass") : $("lUser")).focus();
+  $("lf").onsubmit = async e=>{
+    e.preventDefault();
+    const usuario = $("lUser").value.trim(), clave = $("lPass").value;
+    const err = $("lErr");
+    if(!usuario || !clave) return err.textContent = "Escribe tu usuario y contraseña.";
+    $("lGo").disabled = true; err.textContent = "Revisando…";
+    try{
+      const d = await rpc("panel", {usuario, clave});
+      saveSession(d, true);
+      const hadPending = pending().length;
+      if(hadPending){ await flush(); try{ d.pruebas = (await rpc("panel", {usuario, clave})).pruebas; }catch(e){} }
+      panelCreds = {usuario, clave}; panelData = d;
+      const own = d.alumnos.filter(a=>a.padre===d.usuario);
+      panelSel = (!d.es_admin && d.alumnos.length===1) ? d.alumnos[0].id : null;
+      if(!d.es_admin && own.length===1) panelSel = own[0].id;
+      renderPanel();
+      stopPoll(); pollTimer = setInterval(refreshPanel, 5000);
+    }catch(x){
+      $("lGo").disabled = false; err.textContent = errText(x);
+    }
+  };
+}
+async function refreshPanel(){
+  if(view!=="panel" || !panelCreds || document.hidden) return;
+  try{
+    const d = await rpc("panel", panelCreds);
+    if(d.pruebas.length !== panelData.pruebas.length || d.alumnos.length !== panelData.alumnos.length){
+      const openIds = [...document.querySelectorAll("details.h[open]")].map(x=>x.dataset.id);
+      panelData = d; renderPanel(openIds);
+    }
+  }catch(e){}
+}
+
+/* ---------- panel ---------- */
+function testsOf(id){ return panelData.pruebas.filter(t=>t.alumno_id===id).sort((a,b)=>a.fecha-b.fecha); }
+function showOverview(){ return panelData.es_admin || panelData.alumnos.length > 1; }
+
+function renderPanel(openIds){
+  setView("panel", true);
+  if(panelSel && panelData.alumnos.some(a=>a.id===panelSel)) return renderKid(panelSel, openIds);
+  renderOverview();
+}
+function deviceBox(){
+  const kid = activeKid();
+  return `<div class="device"><span>En este aparato practica: <b>${esc(kid ? kid.nombre : "nadie")}</b></span>
+    <button class="link" id="pOut" type="button">Cerrar sesión en este aparato</button></div>`;
+}
+function bindDevice(){
+  $("pOut").onclick = ()=>{ lsDel(LS_FAM); lsDel(LS_CACHE); updateBrand(); renderWelcome(); };
+}
+let adminFilter = {padre:"", q:""};
+function familiesOf(d){
+  const m = new Map();
+  d.alumnos.forEach(a=>{ if(!m.has(a.padre)) m.set(a.padre, {usuario:a.padre, nombre:a.padre_nombre, rol:a.rol}); });
+  return [...m.values()].sort((x,y)=>x.nombre.localeCompare(y.nombre,"es"));
+}
+function kidOptions(d, selected){
+  return d.alumnos.slice().sort((x,y)=>x.nombre.localeCompare(y.nombre,"es"))
+    .map(a=>`<option value="${esc(a.id)}" ${a.id===selected?"selected":""}>${esc(a.nombre)} · ${esc(a.padre_nombre)}</option>`).join("");
+}
+function applySearch(){
+  const q = adminFilter.q.trim().toLowerCase();
+  let shown = 0;
+  document.querySelectorAll(".kidCard").forEach(c=>{
+    const ok = !q || c.dataset.text.includes(q);
+    c.hidden = !ok; if(ok) shown++;
+  });
+  const total = document.querySelectorAll(".kidCard").length;
+  const el = $("fCount"); if(el) el.textContent = `Mostrando ${shown} de ${total} alumno${total===1?"":"s"}`;
+}
+function renderOverview(){
+  const d0 = panelData;
+  if(d0.es_admin && adminFilter.padre && !d0.alumnos.some(a=>a.padre===adminFilter.padre)) adminFilter.padre = "";
+  const fAl = d0.es_admin && adminFilter.padre ? d0.alumnos.filter(a=>a.padre===adminFilter.padre) : d0.alumnos;
+  const fIds = new Set(fAl.map(a=>a.id));
+  const d = {...d0, alumnos: fAl, pruebas: d0.pruebas.filter(t=>fIds.has(t.alumno_id))};
+  const all = d.pruebas;
+  const familias = new Set(d.alumnos.map(a=>a.padre)).size;
+  const filters = d0.es_admin ? `
+    <div class="filters">
+      <div class="field"><label for="fAlumno">Ver alumno</label>
+        <select id="fAlumno"><option value="">Todos los alumnos</option>${kidOptions(d0, null)}</select></div>
+      <div class="field"><label for="fPadre">Familia</label>
+        <select id="fPadre"><option value="">Todas las familias</option>${familiesOf(d0).map(f=>`<option value="${esc(f.usuario)}" ${f.usuario===adminFilter.padre?"selected":""}>${esc(f.nombre)} (@${esc(f.usuario)})</option>`).join("")}</select></div>
+      <div class="field"><label for="fBuscar">Buscar</label>
+        <input id="fBuscar" type="search" placeholder="Nombre del niño o del papá" value="${esc(adminFilter.q)}" autocomplete="off"></div>
+    </div>
+    <p class="muted" id="fCount" style="margin:0;font-size:.85rem"></p>` : "";
+  const rows = d.alumnos.map(a=>{
+    const ts = testsOf(a.id);
+    const st = tableStatus(ts);
+    const prac = TABLES.filter(t=>st[t].st==="practicar");
+    const dom = TABLES.filter(t=>st[t].st==="dominada");
+    const last = ts[ts.length-1];
+    return {a, ts, avg:avgOf(ts), last, prac, dom};
+  }).sort((x,y)=>(y.last?y.last.fecha:0)-(x.last?x.last.fecha:0));
+  $app().innerHTML = `
+  <section class="card sec">
+    <div class="phead">
+      <div><h2>Hola, ${esc(d.nombre)}</h2>
+      <p class="muted" style="margin:0">${d.es_admin ? "Administrador · ves a todos los alumnos registrados" : "Tus hijos"}</p></div>
+      ${d.es_admin ? `<span class="chip g">Administrador</span>` : ""}
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span>Alumnos</span><b>${d.alumnos.length}</b></div>
+      ${d.es_admin ? `<div class="kpi"><span>Familias</span><b>${familias}</b></div>` : ""}
+      <div class="kpi"><span>Pruebas</span><b>${all.length}</b></div>
+      <div class="kpi"><span>Promedio general</span><b style="color:${all.length?gradeColor(avgOf(all)):'inherit'}">${avgOf(all) ?? "—"}</b></div>
+    </div>
+    ${filters}
+    ${deviceBox()}
+  </section>
+  <section class="kids">
+    ${rows.map(r=>`
+    <button class="kidCard" type="button" data-id="${esc(r.a.id)}" data-text="${esc((r.a.nombre+" "+r.a.padre_nombre+" "+r.a.padre).toLowerCase())}">
+      <div class="kcTop">
+        <div style="min-width:0"><h3>${esc(r.a.nombre)}</h3>
+          <p class="muted">${esc(r.a.grado || "Sin grado")}${d.es_admin ? ` · ${esc(roleLabel(r.a.rol))}: ${esc(r.a.padre_nombre)} (@${esc(r.a.padre)})` : ""}</p></div>
+        <b class="kcAvg" style="color:${r.avg!==null?gradeColor(r.avg):'var(--muted)'}">${r.avg ?? "—"}</b>
+      </div>
+      <p class="kcMeta">${r.ts.length} prueba${r.ts.length===1?"":"s"}${r.last ? ` · última: ${fmtDate(r.last.fecha)} (${r.last.calificacion})` : " · aún no hace pruebas"}</p>
+      ${(r.prac.length||r.dom.length) ? `<div class="chips left">
+        ${r.prac.map(t=>`<span class="chip b">× ${t}</span>`).join("")}
+        ${r.dom.map(t=>`<span class="chip g">★ ${t}</span>`).join("")}
+      </div>` : ""}
+    </button>`).join("") || `<div class="card"><p class="muted" style="margin:0">Todavía no hay alumnos registrados.</p></div>`}
+  </section>`;
+  document.querySelectorAll(".kidCard").forEach(b=>b.onclick=()=>{ panelSel=b.dataset.id; renderPanel(); });
+  if(d0.es_admin){
+    $("fAlumno").onchange = e=>{ if(e.target.value){ panelSel = e.target.value; renderPanel(); } };
+    $("fPadre").onchange = e=>{ adminFilter.padre = e.target.value; renderPanel(); };
+    $("fBuscar").oninput = e=>{ adminFilter.q = e.target.value; applySearch(); };
+    applySearch();
+  }
+  bindDevice();
+}
+
+function trendSvg(list){
+  const pts = list.slice(-30);
+  if(pts.length < 2) return `<p class="muted" style="margin:0">La gráfica aparece después de 2 pruebas.</p>`;
+  const W=640,H=200,L=34,R=12,T=12,B=26;
+  const x = i => L + i*(W-L-R)/(pts.length-1);
+  const y = v => T + (10-v)*(H-T-B)/10;
+  const grid = [0,5,7,9,10].map(v=>`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${v}</text>`).join("");
+  const line = pts.map((p,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(p.calificacion).toFixed(1)}`).join(" ");
+  const area = line + ` L${x(pts.length-1)},${y(0)} L${x(0)},${y(0)} Z`;
+  const dots = pts.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.calificacion)}" r="${i===pts.length-1?5:3}" fill="${i===pts.length-1?'var(--coral)':'var(--surface)'}" stroke="var(--coral)" stroke-width="2"><title>${fmtDate(p.fecha)}: ${p.calificacion}</title></circle>`).join("");
+  const d0 = new Date(pts[0].fecha).toLocaleDateString("es-MX",{day:"numeric",month:"short"});
+  const d1 = new Date(pts[pts.length-1].fecha).toLocaleDateString("es-MX",{day:"numeric",month:"short"});
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Calificaciones de las últimas pruebas">${grid}<path d="${area}" fill="var(--coral)" opacity=".1"/><path d="${line}" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-linejoin="round"/>${dots}<text x="${L}" y="${H-6}" font-size="11" fill="var(--muted)">${d0}</text><text x="${W-R}" y="${H-6}" text-anchor="end" font-size="11" fill="var(--muted)">${d1}</text></svg></div>`;
+}
+
+function renderKid(id, openIds){
+  const d = panelData;
+  const a = d.alumnos.find(x=>x.id===id);
+  const list = testsOf(id);
+  const name = esc(a.nombre);
+  const status = tableStatus(list);
+  const {factMiss} = factStats(list);
+  const n = list.length;
+  const avg = avgOf(list);
+  const avg5 = avgOf(list.slice(-5));
+  const best = n ? Math.max(...list.map(t=>Number(t.calificacion))) : null;
+  const dom = TABLES.filter(t=>status[t].st==="dominada");
+  const prac = TABLES.filter(t=>status[t].st==="practicar");
+  const camino = TABLES.filter(t=>status[t].st==="camino");
+  const worstFacts = Object.values(factMiss).filter(f=>f.miss>0).sort((p,q)=>(q.miss/q.total)-(p.miss/p.total) || q.miss-p.miss).slice(0,10);
+  const ordered = TABLES.slice().sort((p,q)=>(status[p].acc??2)-(status[q].acc??2));
+  const open = new Set(openIds||[]);
+  const kid = activeKid();
+  const onDevice = kid && kid.id===id;
+
+  let plan = "";
+  if(!n) plan = `<p>Todavía no hay pruebas. Cuando ${name} haga la primera, aquí verás qué tablas domina y cuáles practicar.</p>`;
+  else {
+    if(prac.length) plan += `<p><b>Enfocar esta semana:</b> tabla${prac.length>1?"s":""} del ${prac.join(", ")}. La app ya le pregunta más de estas.</p>`;
+    if(camino.length) plan += `<p><b>Reforzar:</b> ${camino.join(", ")}. Van bien, falta constancia.</p>`;
+    if(dom.length) plan += `<p><b>Ya domina:</b> ${dom.join(", ")}. Solo aparecen como repaso, máximo una vez por prueba.</p>`;
+    if(worstFacts.length) plan += `<p><b>Multiplicaciones que más se le complican:</b> ${worstFacts.slice(0,4).map(f=>f.a+"×"+f.b).join(", ")}.</p>`;
+  }
+
+  $app().innerHTML = `
+  ${showOverview() ? `<div class="kbar">
+    <button class="link back" id="kBack" type="button">← Todos los alumnos</button>
+    ${d.es_admin ? `<div class="field inline"><label for="kSwitch">Ver alumno</label><select id="kSwitch">${kidOptions(d, id)}</select></div>` : ""}
+  </div>` : ""}
+  <div class="kgrid">
+  <section class="card sec span2">
+    <div class="phead">
+      <div style="min-width:0"><h2>Avance de ${name}</h2>
+        <p class="muted" style="margin:0">${esc(a.grado || "Sin grado")}${d.es_admin ? ` · ${esc(roleLabel(a.rol))}: ${esc(a.padre_nombre)} (@${esc(a.padre)})` : ""}</p></div>
+      ${onDevice ? `<span class="chip g">Practica en este aparato</span>` : `<button class="btn alt small" id="kUse" type="button">Que ${name} practique en este aparato</button>`}
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span>Pruebas</span><b>${n}</b></div>
+      <div class="kpi"><span>Promedio general</span><b style="color:${avg!==null?gradeColor(avg):'inherit'}">${avg ?? "—"}</b></div>
+      <div class="kpi"><span>Últimas 5</span><b style="color:${avg5!==null?gradeColor(avg5):'inherit'}">${avg5 ?? "—"}</b></div>
+      <div class="kpi"><span>Mejor</span><b>${best ?? "—"}</b></div>
+    </div>
+    <div class="plan">${plan}</div>
+    <p class="muted" style="margin:0;font-size:.8rem">Se actualiza solo cada 5 segundos.</p>
+  </section>
+
+  <section class="card sec">
+    <h2>Calificaciones</h2>
+    ${trendSvg(list)}
+  </section>
+
+  <section class="card sec">
+    <h2>Dominio por tabla</h2>
+    <p class="muted" style="margin:0;font-size:.9rem">Según sus últimas 12 respuestas de cada tabla. “Dominada” = 90% o más de aciertos con al menos 8 respuestas.</p>
+    <div>
+    ${ordered.map(t=>{
+      const s = status[t]; const [lab,cls] = ST_LABEL[s.st];
+      const pct = s.acc===null ? 0 : Math.round(s.acc*100);
+      const col = s.st==="dominada"?"var(--good)":s.st==="practicar"?"var(--bad)":s.st==="camino"?"var(--warn)":"var(--line)";
+      return `<div class="trow">
+        <div class="tname">× ${t}</div>
+        <div style="min-width:0"><div class="bar"><i style="width:${pct}%;background:${col}"></i></div>
+          <div class="tmeta">${s.acc===null?"Sin respuestas aún":`${pct}% reciente · ${Math.round(s.totalAcc*100)}% histórico · ${s.total} resp.${s.avgMs?` · ${(s.avgMs/1000).toFixed(1)} s`:""}`}</div></div>
+        <span class="chip ${cls}">${lab}</span>
+      </div>`;}).join("")}
+    </div>
+  </section>
+
+  ${worstFacts.length ? `<section class="card sec span2">
+    <h2>Las que más falla</h2>
+    <div class="facts">${worstFacts.map(f=>`<span class="fact">${f.a} × ${f.b} = ${f.a*f.b}<small>${f.miss} de ${f.total}</small></span>`).join("")}</div>
+  </section>` : ""}
+
+  <section class="card sec span2">
+    <h2>Historial completo</h2>
+    <div class="hist">
+    ${n ? list.slice().reverse().map(t=>`<details class="h" data-id="${esc(t.id)}" ${open.has(String(t.id))?"open":""}>
+      <summary><span>${fmtDate(t.fecha)}</span><span><b style="color:${gradeColor(Number(t.calificacion))}">${t.calificacion}</b> · ${t.aciertos}/${t.total}</span></summary>
+      <div class="review">${(t.respuestas||[]).map(r=>`<div class="rv ${r.ok?'':'no'}">${r.a} × ${r.b} = ${r.ok?r.resp:r.a*r.b}${r.ok?"":`<small>Escribió ${r.resp}</small>`}</div>`).join("")}</div>
+      ${t.duracionSeg?`<p class="muted" style="margin:8px 0 0;font-size:.85rem">Duración: ${Math.floor(t.duracionSeg/60)} min ${t.duracionSeg%60} s</p>`:""}
+    </details>`).join("") : `<p class="muted" style="margin:0">Aún no hay pruebas guardadas.</p>`}
+    </div>
+  </section>
+
+  <section class="card sec span2">${deviceBox()}</section>
+  </div>`;
+  if(showOverview()) $("kBack").onclick = ()=>{ panelSel=null; renderPanel(); };
+  if(d.es_admin) $("kSwitch").onchange = e=>{ panelSel = e.target.value; renderPanel(); };
+  if(!onDevice) $("kUse").onclick = ()=>{ const f = fam(); f.activo = id; setFam(f); renderPanel(); };
+  bindDevice();
+}
+
+/* ---------- arranque ---------- */
+$("navBtn").onclick = ()=>{
+  if(view==="quiz" && quiz && quiz.i>0 && quiz.i<N_Q) return;   // no salir a media prueba
+  renderWelcome();
+};
+document.addEventListener("keydown", e=>{
+  if(view!=="quiz") return;
+  if(/^[0-9]$/.test(e.key)) press(e.key);
+  else if(e.key==="Backspace") press("del");
+  else if(e.key==="Enter") press("ok");
+});
+window.addEventListener("online", flush);
+updateBrand(); renderWelcome(); updateSync(); flush();
+
+</script>
 </body>
 </html>
